@@ -1,0 +1,24 @@
+{
+  "name": "sokil/php-state",
+  "description": "State machine",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dmytro Sokil",
+      "email": "dmytro.sokil@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Sokil\\State\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*",
+    "satooshi/php-coveralls": "dev-master"
+  }
+}
