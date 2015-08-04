@@ -30,16 +30,6 @@ class MachineBuilder
     }
 
     /**
-     * Get state by name
-     * @param $stateName
-     * @return State
-     */
-    public function getState($stateName)
-    {
-        return $this->states[$stateName];
-    }
-
-    /**
      * @param $stateName
      * @return MachineBuilder
      */
@@ -57,7 +47,7 @@ class MachineBuilder
     public function addTransition(callable $transitionBuilderCallable)
     {
         $transitionBuilder = new TransitionBuilder();
-        call_user_func($transitionBuilderCallable, $transitionBuilder, $this);
+        call_user_func($transitionBuilderCallable, $transitionBuilder);
         $transition = $transitionBuilder->getTransition();
 
         $this->transitions[$transition->getInitialState()][$transition->getName()] = $transition;
