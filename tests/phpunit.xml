@@ -7,8 +7,7 @@
     </testsuites>
     <filter>
         <blacklist>
-            <file>../src/Exception.php</file>
-            <file>../src/Validator/Exception.php</file>
+            <directory>../vendor</directory>
         </blacklist>
     </filter>
 </phpunit>
