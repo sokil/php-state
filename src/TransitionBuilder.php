@@ -7,14 +7,14 @@ class TransitionBuilder
     private $name;
 
     /**
-     * @var State
+     * @var string name of initial state
      */
-    private $initialState;
+    private $initialStateName;
 
     /**
-     * @var State
+     * @var string name of resulting state
      */
-    private $resultingState;
+    private $resultingStateName;
 
     /**
      * @var callable
@@ -28,20 +28,24 @@ class TransitionBuilder
     }
 
     /**
+     * Set initial state of transition
+     * @param string $stateName name of initial state
      * @return TransitionBuilder
      */
-    public function setInitialState($state)
+    public function setInitialStateName($stateName)
     {
-        $this->initialState = $state;
+        $this->initialStateName = $stateName;
         return $this;
     }
 
     /**
+     * Set resulting state of transition
+     * @param string $stateName name of resulting state
      * @return TransitionBuilder
      */
-    public function setResultingState($state)
+    public function setResultingStateName($stateName)
     {
-        $this->resultingState = $state;
+        $this->resultingStateName = $stateName;
         return $this;
     }
 
@@ -58,8 +62,8 @@ class TransitionBuilder
     {
         return new Transition(
             $this->name,
-            $this->initialState,
-            $this->resultingState,
+            $this->initialStateName,
+            $this->resultingStateName,
             $this->acceptConditionCallable
         );
     }

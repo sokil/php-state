@@ -25,14 +25,14 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             ->addTransition(function(TransitionBuilder $builder) {
                 $builder
                     ->setName('set_in_progress')
-                    ->setInitialState('new')
-                    ->setResultingState('in_progress');
+                    ->setInitialStateName('new')
+                    ->setResultingStateName('in_progress');
             })
             ->addTransition(function(TransitionBuilder $builder) {
                 $builder
                     ->setName('mark_done')
-                    ->setInitialState('in_progress')
-                    ->setResultingState('done');
+                    ->setInitialStateName('in_progress')
+                    ->setResultingStateName('done');
             })
             ->getMachine()
             ->process('set_in_progress')
@@ -60,15 +60,15 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             ->addTransition(function(TransitionBuilder $builder) {
                 $builder
                     ->setName('set_in_progress')
-                    ->setInitialState('new')
-                    ->setResultingState('in_progress')
+                    ->setInitialStateName('new')
+                    ->setResultingStateName('in_progress')
                     ->setAcceptCondition(function() { return true; });
             })
             ->addTransition(function(TransitionBuilder $builder) {
                 $builder
                     ->setName('set_rejected')
-                    ->setInitialState('new')
-                    ->setResultingState('rejected')
+                    ->setInitialStateName('new')
+                    ->setResultingStateName('rejected')
                     ->setAcceptCondition(function() { return false; });
             })
             ->getMachine()

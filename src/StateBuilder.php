@@ -15,7 +15,7 @@ class StateBuilder
     private $metadata = [];
 
     /**
-     * @param $name
+     * @param string $name name of transition
      * @return StateBuilder
      */
     public function setName($name)
@@ -24,6 +24,11 @@ class StateBuilder
         return $this;
     }
 
+    /**
+     * Set state metadata
+     * @param array $metadata state metadata
+     * @return $this
+     */
     public function setMetadata(array $metadata)
     {
         $this->metadata = $metadata;
