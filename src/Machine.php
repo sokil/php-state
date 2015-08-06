@@ -10,15 +10,20 @@ class Machine
     private $currentState;
 
     /**
-     * @var array List of states
+     * @var array<stateName => State> List of states
      */
     private $states = [];
 
     /**
-     * @var array List of transitions
+     * @var array<initialStateName => array<transitionName => Transition>> List of transition instances
      */
     private $transitions = [];
 
+    /**
+     * @param array<State> $states List of state instances
+     * @param string $currentStateName name of current state
+     * @param array<initialStateName => array<transitionName => Transition>> $transitions list of transition instances
+     */
     public function __construct(array $states, $currentStateName, array $transitions)
     {
         $this->states = $states;
@@ -35,6 +40,23 @@ class Machine
     public function getCurrentState()
     {
         return $this->currentState;
+    }
+
+    public function getNextStates()
+    {
+        /* @var $transition \Sokil\State\Transition */
+
+        $nextStates = [];
+
+        foreach ($this->transitions[$this->currentState->getName()] as $transitionName => $transition) {
+            if (!$transition->isAcceptable()) {
+                continue;
+            }
+
+            $nextStates[$transitionName] = $this->states[$transition->getResultingStateName()];
+        }
+
+        return $nextStates;
     }
 
     /**
@@ -55,7 +77,7 @@ class Machine
         $transition = $transitions[$transitionName];
 
         // set current state
-        $this->currentState = $this->states[$transition->getResultingState()];
+        $this->currentState = $this->states[$transition->getResultingStateName()];
 
         return $this;
     }

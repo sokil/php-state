@@ -5,17 +5,23 @@ namespace Sokil\State;
 class MachineBuilder
 {
     /**
-     * @var array List of states
+     * @var array<stateName => State> List of state instances
      */
     private $states = [];
 
+    /**
+     * @var array<initialStateName => array<transitionName => Transition>> List of transition instances
+     */
     private $transitions = [];
 
+    /**
+     * @var string name of initial state
+     */
     private $initialStateName;
 
     /**
      * Add new state
-     * @param State $state
+     * @param callable $stateBuilderCallable
      * @return MachineBuilder
      */
     public function addState(callable $stateBuilderCallable)
@@ -41,7 +47,7 @@ class MachineBuilder
 
     /**
      * Add new transition
-     * @param Transition $transition
+     * @param callable $transitionBuilderCallable
      * @return MachineBuilder
      */
     public function addTransition(callable $transitionBuilderCallable)
@@ -50,7 +56,7 @@ class MachineBuilder
         call_user_func($transitionBuilderCallable, $transitionBuilder);
         $transition = $transitionBuilder->getTransition();
 
-        $this->transitions[$transition->getInitialState()][$transition->getName()] = $transition;
+        $this->transitions[$transition->getInitialStateName()][$transition->getName()] = $transition;
         return $this;
     }
 

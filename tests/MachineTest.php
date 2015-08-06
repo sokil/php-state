@@ -4,7 +4,7 @@ namespace Sokil\State;
 
 class MachineTest extends \PHPUnit_Framework_TestCase
 {
-    public function testInitialize()
+    public function testProcess()
     {
         $machineBuilder = new MachineBuilder();
         $stateName = $machineBuilder
@@ -20,7 +20,7 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             ->setInitialState('new')
             ->addTransition(function(TransitionBuilder $builder) {
                 $builder
-                    ->setName('take_in_progress')
+                    ->setName('set_in_progress')
                     ->setInitialState('new')
                     ->setResultingState('in_progress');
             })
@@ -31,10 +31,48 @@ class MachineTest extends \PHPUnit_Framework_TestCase
                     ->setResultingState('done');
             })
             ->getMachine()
-            ->process('take_in_progress')
+            ->process('set_in_progress')
             ->getCurrentState()
             ->getName();
 
         $this->assertEquals('in_progress', $stateName);
+    }
+
+    public function testSetCondition()
+    {
+        $machineBuilder = new MachineBuilder();
+        $nextStates = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('new');
+            })
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('in_progress');
+            })
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('rejected');
+            })
+            ->setInitialState('new')
+            ->addTransition(function(TransitionBuilder $builder) {
+                $builder
+                    ->setName('set_in_progress')
+                    ->setInitialState('new')
+                    ->setResultingState('in_progress')
+                    ->setAcceptCondition(function() { return true; });
+            })
+            ->addTransition(function(TransitionBuilder $builder) {
+                $builder
+                    ->setName('set_rejected')
+                    ->setInitialState('new')
+                    ->setResultingState('rejected')
+                    ->setAcceptCondition(function() { return false; });
+            })
+            ->getMachine()
+            ->getNextStates();
+
+        // test keys
+        $this->assertEquals(['set_in_progress'], array_keys($nextStates));
+
+        // test values
+        $this->assertEquals('in_progress', $nextStates['set_in_progress']->getName());
     }
 }

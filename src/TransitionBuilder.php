@@ -16,6 +16,11 @@ class TransitionBuilder
      */
     private $resultingState;
 
+    /**
+     * @var callable
+     */
+    private $acceptConditionCallable;
+
     public function setName($name)
     {
         $this->name = $name;
@@ -40,6 +45,12 @@ class TransitionBuilder
         return $this;
     }
 
+    public function setAcceptCondition(callable $condition)
+    {
+        $this->acceptConditionCallable = $condition;
+        return $this;
+    }
+
     /**
      * @return Transition
      */
@@ -48,7 +59,8 @@ class TransitionBuilder
         return new Transition(
             $this->name,
             $this->initialState,
-            $this->resultingState
+            $this->resultingState,
+            $this->acceptConditionCallable
         );
     }
 }

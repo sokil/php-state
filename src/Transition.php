@@ -9,18 +9,24 @@ class Transition
     /**
      * @var string
      */
-    private $initialState;
+    private $initialStateName;
 
     /**
      * @var string
      */
-    private $resultingState;
+    private $resultingStateName;
 
-    public function __construct($name, $initialState, $resultingState)
+    /**
+     * @var callable which checks if transition acceptable
+     */
+    private $acceptConditionCallable;
+
+    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable)
     {
         $this->name = $name;
-        $this->initialState = $initialState;
-        $this->resultingState = $resultingState;
+        $this->initialStateName = $initialState;
+        $this->resultingStateName = $resultingState;
+        $this->acceptConditionCallable = $acceptConditionCallable;
     }
 
     public function getName()
@@ -31,16 +37,26 @@ class Transition
     /**
      * @return string
      */
-    public function getInitialState()
+    public function getInitialStateName()
     {
-        return $this->initialState;
+        return $this->initialStateName;
     }
 
     /**
      * @return string
      */
-    public function getResultingState()
+    public function getResultingStateName()
     {
-        return $this->resultingState;
+        return $this->resultingStateName;
+    }
+
+    public function isAcceptable()
+    {
+        return call_user_func($this->acceptConditionCallable);
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
