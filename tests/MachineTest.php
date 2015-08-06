@@ -7,12 +7,16 @@ class MachineTest extends \PHPUnit_Framework_TestCase
     public function testProcess()
     {
         $machineBuilder = new MachineBuilder();
-        $stateName = $machineBuilder
+        $state = $machineBuilder
             ->addState(function(StateBuilder $builder) {
                 $builder->setName('new');
             })
             ->addState(function(StateBuilder $builder) {
-                $builder->setName('in_progress');
+                $builder
+                    ->setName('in_progress')
+                    ->setMetadata([
+                        'label' => 'In progress'
+                    ]);
             })
             ->addState(function(StateBuilder $builder) {
                 $builder->setName('done');
@@ -32,10 +36,11 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             })
             ->getMachine()
             ->process('set_in_progress')
-            ->getCurrentState()
-            ->getName();
+            ->getCurrentState();
 
-        $this->assertEquals('in_progress', $stateName);
+        $this->assertEquals('in_progress', $state->getName());
+        $this->assertEquals(['label' => 'In progress'], $state->getMetadata());
+        $this->assertEquals('In progress', $state->getMetadata('label'));
     }
 
     public function testSetCondition()
