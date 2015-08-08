@@ -147,7 +147,7 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             ->getNextStates();
 
         // test keys
-        $this->assertEquals(['set_in_progress'], array_keys($nextStates));
+        $this->assertEquals(['set_in_progress', 'set_closed'], array_keys($nextStates));
 
         // test values
         $this->assertEquals('in_progress', $nextStates['set_in_progress']->getName());
