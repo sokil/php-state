@@ -21,6 +21,11 @@ class TransitionBuilder
      */
     private $acceptConditionCallable;
 
+    /**
+     * @var array State metadata
+     */
+    private $metadata = [];
+
     public function setName($name)
     {
         $this->name = $name;
@@ -56,6 +61,17 @@ class TransitionBuilder
     }
 
     /**
+     * Set metadata
+     * @param array $metadata metadata
+     * @return $this
+     */
+    public function setMetadata(array $metadata)
+    {
+        $this->metadata = $metadata;
+        return $this;
+    }
+
+    /**
      * @return Transition
      */
     public function getTransition()
@@ -64,7 +80,8 @@ class TransitionBuilder
             $this->name,
             $this->initialStateName,
             $this->resultingStateName,
-            $this->acceptConditionCallable
+            $this->acceptConditionCallable,
+            $this->metadata
         );
     }
 }

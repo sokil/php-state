@@ -21,12 +21,18 @@ class Transition
      */
     private $acceptConditionCallable;
 
-    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable = null)
+    /**
+     * @var array Transition metadata
+     */
+    private $metadata;
+
+    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable = null, array $metadata = [])
     {
         $this->name = $name;
         $this->initialStateName = $initialState;
         $this->resultingStateName = $resultingState;
         $this->acceptConditionCallable = $acceptConditionCallable;
+        $this->metadata = $metadata;
     }
 
     public function getName()
@@ -57,6 +63,19 @@ class Transition
         }
 
         return call_user_func($this->acceptConditionCallable);
+    }
+
+    public function getMetadata($key = null)
+    {
+        if (!$key) {
+            return $this->metadata;
+        }
+
+        if (!isset($this->metadata[$key])) {
+            return null;
+        }
+
+        return $this->metadata[$key];
     }
 
     public function __toString()

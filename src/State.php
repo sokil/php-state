@@ -12,9 +12,9 @@ class State
     /**
      * @var array State metadata
      */
-    private $metadata = [];
+    private $metadata;
 
-    public function __construct($name, $metadata = [])
+    public function __construct($name, array $metadata = [])
     {
         $this->name = $name;
         $this->metadata = $metadata;
