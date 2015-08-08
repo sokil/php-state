@@ -30,6 +30,14 @@ class Machine
 
         $this->transitions = $transitions;
 
+        if(!$currentStateName) {
+            throw new \Exception('Current state not set');
+        }
+
+        if (empty($this->states[$currentStateName])) {
+            throw new \Exception('Passed name of current state is wrong');
+        }
+
         $this->currentState = $this->states[$currentStateName];
     }
 
@@ -42,21 +50,48 @@ class Machine
         return $this->currentState;
     }
 
-    public function getNextStates()
+    /**
+     * Get next transitions
+     * @return array
+     * @throws \Exception
+     */
+    public function getNextTransitions()
     {
         /* @var $transition \Sokil\State\Transition */
 
-        $nextStates = [];
+        $nextTransitions = [];
 
-        foreach ($this->transitions[$this->currentState->getName()] as $transitionName => $transition) {
+        // get all transitions
+        $currentStateName = $this->currentState->getName();
+        if (empty($this->transitions[$currentStateName])) {
+            throw new \Exception('No transitions found for passed state');
+        }
+
+        // get accepted transitions
+        foreach ($this->transitions[$currentStateName] as $transitionName => $transition) {
             if (!$transition->isAcceptable()) {
                 continue;
             }
 
-            $nextStates[$transitionName] = $this->states[$transition->getResultingStateName()];
+            $nextTransitions[$transitionName] = $transition;
         }
 
-        return $nextStates;
+        return $nextTransitions;
+    }
+
+    /**
+     * Get next states
+     * @return array
+     * @throws \Exception
+     */
+    public function getNextStates()
+    {
+        return array_map(
+            function(Transition $transition) {
+                return $this->states[$transition->getResultingStateName()];
+            },
+            $this->getNextTransitions()
+        );
     }
 
     /**
@@ -68,12 +103,12 @@ class Machine
     {
         /* @var $transition \Sokil\State\Transition */
 
-        $transitions = $this->transitions[$this->currentState->getName()];
+        // get transition
+        $transitions = $this->getNextTransitions();
         if (empty($transitions[$transitionName])) {
             throw new \InvalidArgumentException('Wrong transition name');
         }
 
-        // get transition
         $transition = $transitions[$transitionName];
 
         // set current state

@@ -43,6 +43,69 @@ class MachineTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('In progress', $state->getMetadata('label'));
     }
 
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Current state not set
+     */
+    public function testProcess_CurrentStateNotSet()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder->getMachine();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Passed name of current state is wrong
+     */
+    public function testProcess_PassedNameOfCurrentStateIsWrong()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder
+            ->setInitialState('new')
+            ->getMachine();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No transitions found for passed state
+     */
+    public function testGetNextTransitions_NoTransitionsFoundForPassedState()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('new');
+            })
+            ->setInitialState('new')
+            ->getMachine()
+            ->getNextTransitions();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Wrong transition name
+     */
+    public function testProcessUnexistedTransition()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('new');
+            })
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('resolved');
+            })
+            ->setInitialState('new')
+            ->addTransition(function(TransitionBuilder $builder) {
+                $builder
+                    ->setInitialStateName('new')
+                    ->setResultingStateName('resolved');
+            })
+            ->getMachine();
+
+        $machine->process('UNEXISTED_TRANSITION');
+    }
+
     public function testSetCondition()
     {
         $machineBuilder = new MachineBuilder();
@@ -55,6 +118,9 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             })
             ->addState(function(StateBuilder $builder) {
                 $builder->setName('rejected');
+            })
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('closed');
             })
             ->setInitialState('new')
             ->addTransition(function(TransitionBuilder $builder) {
@@ -70,6 +136,12 @@ class MachineTest extends \PHPUnit_Framework_TestCase
                     ->setInitialStateName('new')
                     ->setResultingStateName('rejected')
                     ->setAcceptCondition(function() { return false; });
+            })
+            ->addTransition(function(TransitionBuilder $builder) {
+                $builder
+                    ->setName('set_closed')
+                    ->setInitialStateName('new')
+                    ->setResultingStateName('closed');
             })
             ->getMachine()
             ->getNextStates();

@@ -21,7 +21,7 @@ class Transition
      */
     private $acceptConditionCallable;
 
-    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable)
+    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable = null)
     {
         $this->name = $name;
         $this->initialStateName = $initialState;
@@ -52,6 +52,10 @@ class Transition
 
     public function isAcceptable()
     {
+        if (!$this->acceptConditionCallable) {
+            return true;
+        }
+
         return call_user_func($this->acceptConditionCallable);
     }
 
