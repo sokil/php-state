@@ -45,6 +45,16 @@ class MachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Exception
+     * @expectedExceptionMessage Initial state not specified
+     */
+    public function testProcess_InitialStateNotSpecified()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder->getMachine();
+    }
+
+    /**
+     * @expectedException \Exception
      * @expectedExceptionMessage Passed name of initial state is wrong
      */
     public function testProcess_PassedNameOfCurrentStateIsWrong()
@@ -56,26 +66,10 @@ class MachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage No transitions found for passed state
-     */
-    public function testGetNextTransitions_NoTransitionsFoundForPassedState()
-    {
-        $machineBuilder = new MachineBuilder();
-        $machine = $machineBuilder
-            ->addState(function(StateBuilder $builder) {
-                $builder->setName('new');
-            })
-            ->setInitialState('new')
-            ->getMachine()
-            ->getNextTransitions();
-    }
-
-    /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Wrong transition name
      */
-    public function testProcessUnexistedTransition()
+    public function testProcess_UnexistedTransition()
     {
         $machineBuilder = new MachineBuilder();
         $machine = $machineBuilder
@@ -94,6 +88,22 @@ class MachineTest extends \PHPUnit_Framework_TestCase
             ->getMachine();
 
         $machine->process('UNEXISTED_TRANSITION');
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No transitions found for passed state
+     */
+    public function testGetNextTransitions_NoTransitionsFoundForPassedState()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('new');
+            })
+            ->setInitialState('new')
+            ->getMachine()
+            ->getNextTransitions();
     }
 
     public function testSetCondition()

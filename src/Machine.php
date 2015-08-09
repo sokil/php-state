@@ -35,6 +35,10 @@ class Machine
         $this->transitions = $transitions;
 
         // set initial state of machine
+        if (!$initialStateName) {
+            throw new \Exception('Initial state not specified');
+        }
+
         if (empty($this->states[$initialStateName])) {
             throw new \Exception('Passed name of initial state is wrong');
         }
