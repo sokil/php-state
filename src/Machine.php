@@ -28,25 +28,23 @@ class Machine
      */
     public function __construct(array $states, array $transitions, $initialStateName)
     {
+        // set states
         $this->states = $states;
+
+        // set transitions
         $this->transitions = $transitions;
 
-        $this->setInitialState($initialStateName);
-    }
-
-    public function setInitialState($stateName)
-    {
-        if (empty($this->states[$stateName])) {
+        // set initial state of machine
+        if (empty($this->states[$initialStateName])) {
             throw new \Exception('Passed name of initial state is wrong');
         }
 
-        $this->initialStateName = $stateName;
-
-        return $this;
+        $this->initialStateName = $initialStateName;
     }
 
     /**
      * Initialize machine by current state.
+     *
      * @param $stateName state name that will set as current. If omited, then
      *   initial state will be set as current
      * @return Machine
