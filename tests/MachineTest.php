@@ -45,17 +45,7 @@ class MachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Current state not set
-     */
-    public function testProcess_CurrentStateNotSet()
-    {
-        $machineBuilder = new MachineBuilder();
-        $machine = $machineBuilder->getMachine();
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Passed name of current state is wrong
+     * @expectedExceptionMessage Passed name of initial state is wrong
      */
     public function testProcess_PassedNameOfCurrentStateIsWrong()
     {
@@ -151,5 +141,22 @@ class MachineTest extends \PHPUnit_Framework_TestCase
 
         // test values
         $this->assertEquals('in_progress', $nextStates['set_in_progress']->getName());
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Passed name of current state is wrong
+     */
+    public function testInitialize_WrongStateName()
+    {
+        $machineBuilder = new MachineBuilder();
+
+        $machine = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder->setName('new');
+            })
+            ->setInitialState('new')
+            ->getMachine()
+            ->initialize('resolved');
     }
 }

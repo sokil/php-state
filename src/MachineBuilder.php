@@ -65,6 +65,6 @@ class MachineBuilder
      */
     public function getMachine()
     {
-        return new Machine($this->states, $this->initialStateName, $this->transitions);
+        return new Machine($this->states, $this->transitions, $this->initialStateName);
     }
 }

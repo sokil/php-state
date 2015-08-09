@@ -19,26 +19,52 @@ class Machine
      */
     private $transitions = [];
 
+    private $initialStateName;
+
     /**
      * @param array<State> $states List of state instances
-     * @param string $currentStateName name of current state
      * @param array<initialStateName => array<transitionName => Transition>> $transitions list of transition instances
+     * @param string $initialStateName name of initial state
      */
-    public function __construct(array $states, $currentStateName, array $transitions)
+    public function __construct(array $states, array $transitions, $initialStateName)
     {
         $this->states = $states;
-
         $this->transitions = $transitions;
 
-        if(!$currentStateName) {
-            throw new \Exception('Current state not set');
+        $this->setInitialState($initialStateName);
+    }
+
+    public function setInitialState($stateName)
+    {
+        if (empty($this->states[$stateName])) {
+            throw new \Exception('Passed name of initial state is wrong');
         }
 
-        if (empty($this->states[$currentStateName])) {
+        $this->initialStateName = $stateName;
+
+        return $this;
+    }
+
+    /**
+     * Initialize machine by current state.
+     * @param $stateName state name that will set as current. If omited, then
+     *   initial state will be set as current
+     * @return Machine
+     * @throws \Exception
+     */
+    public function initialize($stateName = null)
+    {
+        if (!$stateName) {
+            $stateName = $this->initialStateName;
+        }
+
+        if (empty($this->states[$stateName])) {
             throw new \Exception('Passed name of current state is wrong');
         }
 
-        $this->currentState = $this->states[$currentStateName];
+        $this->currentState = $this->states[$stateName];
+
+        return $this;
     }
 
     /**
@@ -47,6 +73,10 @@ class Machine
      */
     public function getCurrentState()
     {
+        if(!$this->currentState) {
+            $this->initialize();
+        }
+
         return $this->currentState;
     }
 
@@ -62,7 +92,7 @@ class Machine
         $nextTransitions = [];
 
         // get all transitions
-        $currentStateName = $this->currentState->getName();
+        $currentStateName = $this->getCurrentState()->getName();
         if (empty($this->transitions[$currentStateName])) {
             throw new \Exception('No transitions found for passed state');
         }
