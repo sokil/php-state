@@ -1,6 +1,6 @@
 # Finite State Machine
 
-Implementation of finite state machine on PHP, mased on immutable objects.
+Implementation of finite state machine on PHP, based on immutable objects.
 
 [![Latest Stable Version](https://poser.pugx.org/sokil/php-state/v/stable.png)](https://packagist.org/packages/sokil/php-state)
 [![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-state.svg)](https://packagist.org/packages/sokil/php-state)
