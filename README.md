@@ -60,8 +60,10 @@ $state = $machine->process('set_in_progress')->getCurrentState();
 
 You can install library through Composer:
 
+```json
 {
     "require": {
         "sokil/php-state": "dev-master"
     }
 }
+```
