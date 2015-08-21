@@ -55,3 +55,13 @@ $machine = $machineBuilder->getMachine();
 // process transition
 $state = $machine->process('set_in_progress')->getCurrentState();
 ```
+
+### Installation
+
+You can install library through Composer:
+
+{
+    "require": {
+        "sokil/php-state": "dev-master"
+    }
+}
