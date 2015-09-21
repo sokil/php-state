@@ -4,6 +4,7 @@ namespace Sokil\State;
 
 use Sokil\State\Configuration\YamlConfiguration;
 use Sokil\State\Configuration\ArrayConfiguration;
+use Sokil\State\Configuration\JsonConfiguration;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,6 +13,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         return [
             [new YamlConfiguration(__DIR__ . '/configs/task.yaml')],
             [new ArrayConfiguration(__DIR__ . '/configs/task.php')],
+            [new JsonConfiguration(__DIR__ . '/configs/task.json')],
         ];
     }
 
