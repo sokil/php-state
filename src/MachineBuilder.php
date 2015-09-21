@@ -67,4 +67,15 @@ class MachineBuilder
     {
         return new Machine($this->states, $this->transitions, $this->initialStateName);
     }
+
+    /**
+     * Configure machine
+     *
+     * @param Configuration $configuration
+     */
+    public function configure(Configuration $configuration)
+    {
+        $configuration->configure($this);
+        return $this;
+    }
 }
