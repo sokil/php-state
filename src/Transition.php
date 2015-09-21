@@ -26,7 +26,7 @@ class Transition
      */
     private $metadata;
 
-    public function __construct($name, $initialState, $resultingState, $acceptConditionCallable = null, array $metadata = [])
+    public function __construct($name, $initialState, $resultingState, callable $acceptConditionCallable = null, array $metadata = [])
     {
         $this->name = $name;
         $this->initialStateName = $initialState;
