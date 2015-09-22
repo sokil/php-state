@@ -71,3 +71,34 @@ You can install library through Composer:
     }
 }
 ```
+
+### Configuration
+
+Machine may be configured by using configuration in different formats. Currenly supported are YAML, JSON and php array files.
+
+```php
+<?php
+
+// YAML
+$configuration = new YamlConfiguration('config'.yaml', ['pecl' => false]);
+
+// PHP Array
+$configuration = new ArrayConfiguration('config.php');
+
+// JSON
+$configuration = new JsonConfiguration('config'.json');
+
+// Configure
+$machineBuilder = new MachineBuilder();
+$machine = $machineBuilder->configure($configuration)->getMachine();
+```
+
+By default, `YamlConfiguration` uses pecl extension, but if there is no possibility to install this extension onserver, you can use
+(Symfony's YAML component)[http://symfony.com/doc/current/components/yaml/introduction.html].
+
+```php
+<?php
+$configuration = new YamlConfiguration('config'.yaml');
+```
+
+This also require you to add dependency on `symfony/yaml` to your `composer.json`.

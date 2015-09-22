@@ -19,6 +19,10 @@
   },
   "require-dev": {
     "phpunit/phpunit": "3.7.*",
-    "satooshi/php-coveralls": "dev-master"
+    "satooshi/php-coveralls": "dev-master",
+    "symfony/yaml": "2.*"
+  },
+  "suggest": {
+    "symfony/yaml": "YAML parser from Symfony"
   }
 }

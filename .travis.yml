@@ -7,8 +7,6 @@ php:
   - nightly
 
 before_script:
-  - printf "\n" | pecl install yaml
-  - echo "extension = yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --dev --no-interaction
   
 script:
