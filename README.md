@@ -98,7 +98,7 @@ By default, `YamlConfiguration` uses pecl extension, but if there is no possibil
 
 ```php
 <?php
-$configuration = new YamlConfiguration('config'.yaml');
+$configuration = new YamlConfiguration('config.yaml');
 ```
 
 This also require you to add dependency on `symfony/yaml` to your `composer.json`.
