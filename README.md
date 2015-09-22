@@ -74,7 +74,7 @@ You can install library through Composer:
 
 ### Configuration
 
-Machine may be configured by using configuration in different formats. Currenly supported are YAML, JSON and php array files.
+Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files.
 
 ```php
 <?php
