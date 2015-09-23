@@ -74,7 +74,7 @@ You can install library through Composer:
 
 ### Configuration
 
-Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files. Exaples of configs may be viewed [here](https://github.com/sokil/php-state/tree/master/tests/configs)
+Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files. Exaples of configs may be viewed [here](https://github.com/sokil/php-state/tree/master/tests/configs).
 
 ```php
 <?php
