@@ -74,7 +74,7 @@ You can install library through Composer:
 
 ### Configuration
 
-Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files.
+Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files. Exaples of configs may be viewed [here](https://github.com/sokil/php-state/tree/master/tests/configs)
 
 ```php
 <?php
@@ -93,7 +93,7 @@ $machineBuilder = new MachineBuilder();
 $machine = $machineBuilder->configure($configuration)->getMachine();
 ```
 
-By default, `YamlConfiguration` uses pecl extension, but if there is no possibility to install this extension onserver, you can use
+By default, `YamlConfiguration` uses pecl extension, but if there is no possibility to install this extension on server, you can use
 (Symfony's YAML component)[http://symfony.com/doc/current/components/yaml/introduction.html].
 
 ```php
