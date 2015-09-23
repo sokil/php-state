@@ -95,7 +95,7 @@ stateName2:
 <?php
 
 // YAML
-$configuration = new YamlConfiguration('config'.yaml', ['pecl' => false]);
+$configuration = new YamlConfiguration('config'.yaml');
 
 // PHP Array
 $configuration = new ArrayConfiguration('config.php');
@@ -109,11 +109,11 @@ $machine = $machineBuilder->configure($configuration)->getMachine();
 ```
 
 By default, `YamlConfiguration` uses pecl extension, but if there is no possibility to install this extension on server, you can use
-(Symfony's YAML component)[http://symfony.com/doc/current/components/yaml/introduction.html].
+[Symfony's YAML component](http://symfony.com/doc/current/components/yaml/introduction.html).
 
 ```php
 <?php
-$configuration = new YamlConfiguration('config.yaml');
+$configuration = new YamlConfiguration('config.yaml', ['pecl' => false]);
 ```
 
 This also require you to add dependency on `symfony/yaml` to your `composer.json`.
