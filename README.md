@@ -76,6 +76,21 @@ You can install library through Composer:
 
 Machine may be configured directly in code, as in sample above. But also it may be configured by using configuration in files of different formats. Currenly supported are YAML, JSON and php array files. Exaples of configs may be viewed [here](https://github.com/sokil/php-state/tree/master/tests/configs).
 
+In common case structure of config is:
+```yaml
+stateName1:
+  initial: true
+  transitions:
+    transition1Name:
+      resultingState: stateName2
+    to_rejected:
+      resultingState: stateName3
+
+stateName2:
+  transitions:
+  ...
+```
+
 ```php
 <?php
 
