@@ -7,6 +7,18 @@ Implementation of finite state machine on PHP, based on immutable objects.
 [![Build Status](https://travis-ci.org/sokil/php-state.png?branch=master&1)](https://travis-ci.org/sokil/php-state)
 [![Coverage Status](https://coveralls.io/repos/sokil/php-state/badge.png)](https://coveralls.io/r/sokil/php-state)
 
+### Installation
+
+You can install library through Composer:
+
+```json
+{
+    "require": {
+        "sokil/php-state": "dev-master"
+    }
+}
+```
+
 ### Basic Usage
 
 ```php
@@ -58,18 +70,6 @@ $machine = $machineBuilder->getMachine();
 
 // process transition
 $state = $machine->process('set_in_progress')->getCurrentState();
-```
-
-### Installation
-
-You can install library through Composer:
-
-```json
-{
-    "require": {
-        "sokil/php-state": "dev-master"
-    }
-}
 ```
 
 ### Configuration
