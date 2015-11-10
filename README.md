@@ -95,13 +95,13 @@ stateName2:
 <?php
 
 // YAML
-$configuration = new YamlConfiguration('config'.yaml');
+$configuration = new YamlConfiguration('config.yaml');
 
 // PHP Array
 $configuration = new ArrayConfiguration('config.php');
 
 // JSON
-$configuration = new JsonConfiguration('config'.json');
+$configuration = new JsonConfiguration('config.json');
 
 // Configure
 $machineBuilder = new MachineBuilder();
