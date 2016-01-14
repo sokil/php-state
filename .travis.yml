@@ -7,6 +7,10 @@ php:
   - hhvm
   - nightly
 
+matrix:
+  allow_failures:
+    - nightly: nightly
+    
 before_script:
   - composer install --dev --no-interaction
   
