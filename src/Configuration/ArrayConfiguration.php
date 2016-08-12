@@ -3,6 +3,7 @@
 namespace Sokil\State\Configuration;
 
 use Sokil\State\Configuration;
+use Sokil\State\Exception\InvalidConfigurationException;
 
 /**
  * Class ArrayConfiguration
@@ -14,16 +15,29 @@ class ArrayConfiguration extends Configuration
 {
     private $path;
 
+    private $config;
+
     /**
-     * @param string $path path to php array configuration file
+     * @param string|array $config path to configuration file with php array inside or simply php array
+     * @throws InvalidConfigurationException
      */
-    public function __construct($path)
+    public function __construct($config)
     {
-        $this->path = $path;
+        if(is_array($config)) {
+            $this->config = $config;
+        } elseif (is_string($config)) {
+            $this->path = $config;
+        } else {
+            throw new InvalidConfigurationException('Wrong array configuration specified. Must be array or path to file with php array.');
+        }
     }
 
     protected function getConfig()
     {
-        return require($this->path);
+        if (!$this->config) {
+            $this->config = require($this->path);
+        }
+
+        return $this->config;
     }
 }
