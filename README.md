@@ -1,6 +1,6 @@
 # Finite State Machine
 
-Implementation of finite state machine on PHP, based on immutable objects.
+Implementation of finite state machine on PHP.
 
 [![Latest Stable Version](https://poser.pugx.org/sokil/php-state/v/stable.png)](https://packagist.org/packages/sokil/php-state)
 [![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-state.svg)](https://packagist.org/packages/sokil/php-state)
@@ -99,6 +99,8 @@ $configuration = new YamlConfiguration('config.yaml');
 
 // PHP Array
 $configuration = new ArrayConfiguration('config.php');
+// or
+$configuration = new ArrayConfiguration([...state configuration...]);
 
 // JSON
 $configuration = new JsonConfiguration('config.json');
