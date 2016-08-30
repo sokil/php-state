@@ -83,6 +83,17 @@ class Machine
     }
 
     /**
+     * Get state
+     *
+     * @param $name
+     * @return State|null
+     */
+    public function getState($name)
+    {
+        return empty($this->states[$name]) ? null: $this->states[$name];
+    }
+
+    /**
      * Get next transitions
      * @return array
      * @throws \Exception

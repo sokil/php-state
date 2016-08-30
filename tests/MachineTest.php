@@ -4,6 +4,26 @@ namespace Sokil\State;
 
 class MachineTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetState()
+    {
+        $machineBuilder = new MachineBuilder();
+        $machine = $machineBuilder
+            ->addState(function(StateBuilder $builder) {
+                $builder
+                    ->setName('new')
+                    ->setMetadata([
+                        'label' => 'new_label',
+                    ]);
+            })
+            ->setInitialState('new')
+            ->getMachine();
+
+        $this->assertSame(
+            'new_label',
+            $machine->getState('new')->getMetadata('label')
+        );
+    }
+
     public function testProcess()
     {
         $machineBuilder = new MachineBuilder();
