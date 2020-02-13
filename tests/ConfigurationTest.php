@@ -12,7 +12,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [new YamlConfiguration(__DIR__ . '/configs/task.yaml', ['pecl' => false])],
-            [new YamlConfiguration(__DIR__ . '/configs/task.yaml', ['pecl' => true])],
             [new ArrayConfiguration(__DIR__ . '/configs/task.php')],
             [new JsonConfiguration(__DIR__ . '/configs/task.json')],
         ];
