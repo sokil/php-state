@@ -20,7 +20,7 @@
   "require-dev": {
     "phpunit/phpunit": "3.7.*",
     "satooshi/php-coveralls": "0.7.*",
-    "symfony/yaml": "2.*"
+    "symfony/yaml": ">=2.0 <6.0"
   },
   "suggest": {
     "symfony/yaml": "YAML parser from Symfony"
